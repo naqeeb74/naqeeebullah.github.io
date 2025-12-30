@@ -1,153 +1,1806 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Naqeeb Ullah | Dynamics 365 Developer</title>
-    <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naqeeb Ullah | Dynamics CRM Consultant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-light: #8B85FF;
+            --secondary: #4A44C6;
+            --dark: #1A1A2E;
+            --dark-card: #16213E;
+            --light: #F5F5FF;
+            --gray: #8A8AA3;
+            --white: #FFFFFF;
+            --gradient: linear-gradient(135deg, #6C63FF 0%, #4A44C6 50%, #8B85FF 100%);
+            --gradient-2: linear-gradient(135deg, #6C63FF 0%, #FF6B9D 100%);
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow: 0 20px 40px rgba(108, 99, 255, 0.15);
+            --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.3);
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .dark-theme {
+            --primary: #8B85FF;
+            --primary-light: #A9A5FF;
+            --secondary: #6C63FF;
+            --dark: #F5F5FF;
+            --dark-card: #0F3460;
+            --light: #1A1A2E;
+            --gray: #A0A0C0;
+            --white: #16213E;
+            --glass-bg: rgba(26, 26, 46, 0.7);
+            --glass-border: rgba(108, 99, 255, 0.2);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(108, 99, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 107, 157, 0.08) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Particle Canvas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            background: var(--primary);
+        }
+
+        .theme-toggle:hover i {
+            color: white;
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-scrolled {
+            padding: 10px 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        .dark-theme .nav-scrolled {
+            background: rgba(26, 26, 46, 0.95);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            bottom: 5px;
+            right: -10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 35px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .dark-theme .nav-links a {
+            color: var(--light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: var(--transition);
+            border-radius: 10px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Header/Hero */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: var(--gray);
+            max-width: 600px;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-frame {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: var(--gradient);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow);
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.7); }
+            100% { transform: scale(1.02); box-shadow: 0 0 0 20px rgba(108, 99, 255, 0); }
+        }
+
+        .profile-img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid var(--light);
+            position: relative;
+            z-index: 2;
+        }
+
+        .image-frame::before {
+            content: '';
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: var(--gradient-2);
+            opacity: 0.3;
+            filter: blur(20px);
+            z-index: 1;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--gradient);
+            color: white;
+            padding: 16px 34px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient-2);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-left: 15px;
+        }
+
+        .btn-outline::before {
+            background: var(--primary);
+        }
+
+        .btn-outline:hover {
+            color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: var(--gradient);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(108, 99, 255, 0.05) 0%, transparent 70%);
+            z-index: -1;
+            transition: var(--transition);
+            opacity: 0;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(108, 99, 255, 0.2);
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .skill-bars {
+            margin-top: 40px;
+        }
+
+        .skill-bar {
+            margin-bottom: 25px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .skill-percent {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .bar {
+            height: 10px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .skill-category h3 i {
+            font-size: 1.4rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .skill-item {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .skill-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        /* Experience & Projects */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 60px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 22px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--gradient);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+        }
+
+        .exp-header, .project-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .exp-title, .project-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .exp-company, .project-tech {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .exp-duration, .project-duration {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .tech-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-image {
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-links {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-link {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .project-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        /* Contact Form */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 18px 25px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--dark);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .dark-theme .form-control {
+            color: var(--light);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .form-label {
+            position: absolute;
+            top: 18px;
+            left: 25px;
+            color: var(--gray);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .form-control:focus + .form-label,
+        .form-control:not(:placeholder-shown) + .form-label {
+            top: -10px;
+            left: 15px;
+            font-size: 0.85rem;
+            background: var(--light);
+            padding: 0 10px;
+            color: var(--primary);
+        }
+
+        .dark-theme .form-control:focus + .form-label,
+        .dark-theme .form-control:not(:placeholder-shown) + .form-label {
+            background: var(--dark-card);
+        }
+
+        /* Form Status */
+        .form-status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .form-status.success {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            display: block;
+        }
+
+        .form-status.error {
+            background: rgba(244, 67, 54, 0.15);
+            color: #F44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            display: block;
+        }
+
+        /* Contact Info */
+        .contact-info .card {
+            height: 100%;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover .contact-icon {
+            background: var(--gradient);
+            transform: rotate(15deg);
+        }
+
+        .contact-item:hover .contact-icon i {
+            color: white;
+        }
+
+        .contact-icon i {
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-card);
+            color: var(--light);
+            padding: 70px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--gradient);
+            transform: translateY(-8px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Floating Elements */
+        .floating-elem {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.3;
+            animation: floatAround 20s infinite linear;
+        }
+
+        @keyframes floatAround {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, 50px) rotate(90deg); }
+            50% { transform: translate(0, 100px) rotate(180deg); }
+            75% { transform: translate(-50px, 50px) rotate(270deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .hero-content h1 {
+                font-size: 3.2rem;
+            }
+            
+            .image-frame {
+                width: 320px;
+                height: 320px;
+            }
+            
+            .profile-img {
+                width: 290px;
+                height: 290px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                padding-left: 60px;
+            }
+            
+            .timeline-dot {
+                left: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--glass-bg);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                padding: 30px;
+                border-top: 1px solid var(--glass-border);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                z-index: 998;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .skills-container, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-tag {
+                font-size: 0.8rem;
+            }
+            
+            .image-frame {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 30px 25px;
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
 
-    <!-- HERO -->
-    <section class="hero">
-        <h1>Naqeeb Ullah</h1>
-        <h2>Dynamics 365 & Power Platform Developer</h2>
-        <p>
-            Building real-world CRM solutions using Canvas Apps, Power Automate,
-            Power Pages, Plugins, and Dataverse.
-        </p>
-        <div class="buttons">
-            <a href="#projects" class="btn">View Projects</a>
-            <a href="#contact" class="btn outline">Contact Me</a>
+    <!-- Theme Toggle -->
+    <!-- <div class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div> -->
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">Naqeeb</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <!-- <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div> -->
         </div>
-    </section>
+    </nav>
 
-    <!-- ABOUT -->
-    <section class="section" id="about">
-        <h3>About Me</h3>
-        <p>
-            I am a Microsoft Dynamics 365 CRM and Power Platform Developer with hands-on
-            experience working on real client projects. My work includes building Canvas Apps,
-            automating business processes using Power Automate, developing Power Pages websites,
-            and extending Dynamics 365 using plugins, custom actions, and JavaScript.
-        </p>
-        <p>
-            I focus on creating clean, scalable, and business-focused solutions rather than
-            demo or tutorial-based applications, and I have worked closely with seniors
-            and clients to deliver real business value.
-        </p>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section dark">
-        <h3>Skills</h3>
-        <div class="grid">
-            <div class="card">
-                <h4>Dynamics 365</h4>
-                <ul>
-                    <li>Sales Module</li>
-                    <li>Custom Entities & Relationships</li>
-                    <li>Business Rules & BPF</li>
-                    <li>Security Roles</li>
-                    <li>Ribbon Customization</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h4>Power Platform</h4>
-                <ul>
-                    <li>Canvas Apps (Power Fx)</li>
-                    <li>Power Automate</li>
-                    <li>Power Pages</li>
-                    <li>Dataverse</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h4>Development</h4>
-                <ul>
-                    <li>JavaScript</li>
-                    <li>C# Plugins</li>
-                    <li>Custom Actions</li>
-                    <li>Web API / REST</li>
-                </ul>
+    <!-- Header/Hero -->
+    <header>
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="hero-tag">Dynamics CRM Associate Consultant</span>
+                    <h1>Naqeeb Ullah</h1>
+                    <p>I design, customize, and integrate solutions using Microsoft Dynamics 365 to optimize business processes, automate workflows, and enhance user experiences through low-code platforms and custom development.</p>
+                    <div class="btn-container">
+                        <a href="#contact" class="btn">Get In Touch <i class="fas fa-arrow-right"></i></a>
+                        <a href="#projects" class="btn btn-outline">View My Work <i class="fas fa-briefcase"></i></a>
+                    </div>
+                    <div class="hero-stats">
+                        <!-- <div class="stat-item">
+                            <div class="stat-number" data-count="20">0</div>
+                            <div class="stat-text">Projects</div>
+                        </div> -->
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="3">1+</div>
+                            <div class="stat-text">Years Exp</div>
+                        </div>
+                        <!-- <div class="stat-item">
+                            <div class="stat-number" data-count="15">0</div>
+                            <div class="stat-text">Clients</div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-frame">
+                        <!-- Add your profile picture here -->
+                        <img src="/grokportfolio/1765532659802.png" alt="Naqeeb Ullah" class="profile-img">
+                    </div>
+                </div>
             </div>
         </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="card">
+                        <p>I am a skilled Dynamics CRM Associate Consultant with hands-on experience in designing, customizing, and integrating solutions using Microsoft Dynamics 365. My expertise focuses on optimizing business processes, automating workflows, and enhancing user experiences through low-code platforms and custom development.</p>
+                        <p>With a strong background in the Dynamics 365 Sales Module and Canvas Apps, I deliver tailored solutions that drive efficiency and data-driven decision-making.</p>
+                        <p>Currently working at SkySoft Connections in Islamabad, Pakistan, I continuously expand my skills in advanced customizations, plugin development, and system integrations to provide comprehensive CRM solutions.</p>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Dynamics 365 CRM</span>
+                                <span class="skill-percent">95%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Power Platform</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">C# & Plugin Development</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-info">
+                                <span class="skill-name">Integration & APIs</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="bar">
+                                <div class="progress" data-width="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="card">
+                        <h3 style="color: var(--primary); margin-bottom: 20px;">My Approach</h3>
+                        <div class="approach-item" style="margin-bottom: 25px;">
+                            <h4 style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <i class="fas fa-lightbulb" style="color: var(--primary);"></i>
+                                <span>Problem Solving</span>
+                            </h4>
+                            <p style="color: var(--gray);">I analyze business requirements and design tailored Dynamics 365 solutions that address specific challenges.</p>
+                        </div>
+                        <div class="approach-item" style="margin-bottom: 25px;">
+                            <h4 style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <i class="fas fa-cogs" style="color: var(--primary);"></i>
+                                <span>Efficiency Focus</span>
+                            </h4>
+                            <p style="color: var(--gray);">I streamline processes through automation, reducing manual work and improving operational efficiency.</p>
+                        </div>
+                        <div class="approach-item">
+                            <h4 style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+                                <span>Continuous Improvement</span>
+                            </h4>
+                            <p style="color: var(--gray);">I believe in iterative development and continuous enhancement based on user feedback and changing needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-        <h3>Projects</h3>
-
-        <div class="project">
-            <h4>Sales Module – Canvas App</h4>
-            <p>
-                Developed a complete Sales Module using Power Apps Canvas App integrated
-                with Dataverse, managing Products, Accounts, Contacts, Leads, Opportunities,
-                and Quotes with validations and optimized formulas.
-            </p>
-            <span>Canvas App · Dataverse · Power Fx</span>
-        </div>
-
-        <div class="project">
-            <h4>Dynamics 365 Sales Customization</h4>
-            <p>
-                Customized Dynamics 365 Sales by implementing custom entities, business rules,
-                business process flows, security roles, and ribbon buttons.
-            </p>
-            <span>Dynamics 365 · JavaScript · Ribbon Workbench</span>
-        </div>
-
-        <div class="project">
-            <h4>Order Expiry Task Automation</h4>
-            <p>
-                Built a Power Automate flow to automatically create and assign tasks
-                for orders nearing expiry, linked with dashboards for tracking.
-            </p>
-            <span>Power Automate · Dataverse</span>
-        </div>
-
-        <div class="project">
-            <h4>Power Pages – Multi-Step Form</h4>
-            <p>
-                Developed a Power Pages website with multi-step forms, dynamic validations,
-                content snippets, JavaScript logic, and Web API-based CRUD operations.
-            </p>
-            <span>Power Pages · JavaScript · Dataverse</span>
-        </div>
-
-        <div class="project">
-            <h4>Plugins & Custom Actions</h4>
-            <p>
-                Implemented plugins and custom actions to update records, trigger
-                Power Automate flows via HTTP, and send notifications.
-            </p>
-            <span>C# · Plugins · Custom Actions</span>
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>Skills & Abilities</h2>
+            </div>
+            <div class="skills-container">
+                <div class="skill-category card">
+                    <h3><i class="fas fa-code"></i> Power Platform</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Canvas Apps</span>
+                        <span class="skill-item">D365 CRM</span>
+                        <span class="skill-item">Power Pages</span>
+                        <span class="skill-item">Power Automate</span>
+                        <span class="skill-item">Power BI</span>
+                        <span class="skill-item">Dataverse</span>
+                        <span class="skill-item">Business Process Flows</span>
+                        <span class="skill-item">Model-Driven Apps</span>
+                    </div>
+                </div>
+                <div class="skill-category card">
+                    <h3><i class="fas fa-cogs"></i> Development</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Plugins & Custom Actions (C#)</span>
+                        <span class="skill-item">Web Resources (JS/HTML/CSS)</span>
+                        <span class="skill-item">Ribbon Workbench</span>
+                        <span class="skill-item">Custom API Development</span>
+                        <span class="skill-item">Word Templates</span>
+                        <span class="skill-item">.NET API Work</span>
+                        <span class="skill-item">SQL Server</span>
+                        <span class="skill-item">JavaScript</span>
+                    </div>
+                </div>
+                <div class="skill-category card">
+                    <h3><i class="fas fa-tools"></i> Integration & Tools</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">SharePoint Integration</span>
+                        <span class="skill-item">SSRS & SSIS Development</span>
+                        <span class="skill-item">Industry Accelerators</span>
+                        <span class="skill-item">Security Roles</span>
+                        <span class="skill-item">Lookup Fields</span>
+                        <span class="skill-item">Data Validation Logic</span>
+                        <span class="skill-item">Document Management</span>
+                        <span class="skill-item">Azure Services</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- EXPERIENCE -->
-    <section class="section dark">
-        <h3>Experience</h3>
-        <p>
-            <strong>Dynamics 365 CRM Developer — SkySoftConnections</strong><br/>
-            2024 – Present
-        </p>
-        <ul>
-            <li>Worked on GMMA and OMAC client projects</li>
-            <li>Developed Canvas Apps, Power Automate flows, and Power Pages websites</li>
-            <li>Built plugins, custom actions, and JavaScript customizations</li>
-            <li>Collaborated directly with seniors and clients</li>
-        </ul>
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-title">
+                <h2>Professional Experience</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content card">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-title">Dynamics CRM Developer</h3>
+                                <p class="exp-company">SkySoft Connections – Islamabad, Pakistan</p>
+                            </div>
+                            <span class="exp-duration">2024 - Present</span>
+                        </div>
+                        <p>Started as a CRM Developer with a strong focus on building Canvas Apps to streamline business processes. Expanded responsibilities to advanced Dynamics 365 customizations, plugin development, Web Resources (JavaScript/HTML), Power Automate workflows, SharePoint integration, custom Word Templates, Dataverse data handling, and integration with external systems.</p>
+                        <div class="tech-stack">
+                            <span class="tech-item">Power Apps</span>
+                            <span class="tech-item">Power Automate</span>
+                            <span class="tech-item">Power BI</span>
+                            <span class="tech-item">Power Pages/Portals</span>
+                            <span class="tech-item">Plugins (C#)</span>
+                            <span class="tech-item">Web Resources</span>
+                            <span class="tech-item">JavaScript</span>
+                            <span class="tech-item">HTML/CSS</span>
+                            <span class="tech-item">Dataverse</span>
+                            <span class="tech-item">Dynamics 365 CRM</span>
+                            <span class="tech-item">Canvas Apps</span>
+                            <span class="tech-item">Model Driven Apps</span>
+                            <span class="tech-item">SharePoint</span>
+                            <span class="tech-item">Dataverse</span>
+                            <span class="tech-item">SQL Server</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content card">
+                        <div class="exp-header">
+                            <div>
+                                <h3 class="exp-title">CRM Developer</h3>
+                                <p class="exp-company">SkySoft Connections – Islamabad, Pakistan</p>
+                            </div>
+                            <span class="exp-duration">2023 - 2024</span>
+                        </div>
+                        <p>Developed and customized Dynamics 365 solutions, created Canvas Apps for various business processes, implemented Power Automate workflows for automation, and integrated with external systems.</p>
+                        <div class="tech-stack">
+                            <span class="tech-item">Canvas Apps</span>
+                            <span class="tech-item">Power Automate</span>
+                            <span class="tech-item">JavaScript</span>
+                            <span class="tech-item">HTML/CSS</span>
+                            <span class="tech-item">Dataverse</span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-        <h3>Contact</h3>
-        <p>Email: naqeebmsd108@gmail.com</p>
-        <p>LinkedIn: https://www.linkedin.com/in/naqeeb-ullah-264947269/</p>
-        <p>GitHub: github.com/naqeeb74</p>
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Projects</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="OMAC Project">
+                        <!-- <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div> -->
+                    </div>
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">OMAC</h3>
+                            <p class="project-tech">Dynamics 365 • Model Driven Apps • Plugins</p>
+                        </div>
+                    </div>
+                    <p>Developed custom CRM solutions using Dynamics 365, Model Driven Apps, and Plugins C# to enhance operational efficiency and streamline business processes for improved customer engagement.</p>
+                </div>
+                <div class="project-card card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="GAMMA Project">
+                        <!-- <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div> -->
+                    </div>
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">GAMMA</h3>
+                            <p class="project-tech">Power Automate • Power BI • Workflow Automation</p>
+                        </div>
+                    </div>
+                    <p>Implemented workflow automations and data visualizations with Power Automate and Power BI for better business insights, enabling data-driven decision making across departments.</p>
+                </div>
+                <div class="project-card card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="BOBSWATCHES Project">
+                        <!-- <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        </div> -->
+                    </div>
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">BOBSWATCHES</h3>
+                            <p class="project-tech">Power Pages • Custom APIs • Sales Processes</p>
+                        </div>
+                    </div>
+                    <p>Customized sales processes, developed plugins, and created external portals using Power Pages and Custom APIs to enhance customer experience and streamline watch sales operations.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <div class="section-title">
+                <h2>Education</h2>
+            </div>
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <div class="exp-header">
+                    <div>
+                        <h3 class="exp-title">BS Computer Science</h3>
+                        <p class="exp-company">Gomal University</p>
+                    </div>
+                    <span class="exp-duration">2020 - 2024</span>
+                </div>
+                <p>Completed Bachelor's degree in Computer Science with focus on software development, database management, and system architecture, providing a strong foundation for Dynamics 365 customization and development.</p>
+                <div class="tech-stack" style="margin-top: 20px;">
+                    <span class="tech-item">Software Engineering</span>
+                    <span class="tech-item">Database Management</span>
+                    <span class="tech-item">System Architecture</span>
+                    <span class="tech-item">Web Development</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Me</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="card">
+                        <h3 style="color: var(--primary); margin-bottom: 30px;">Get In Touch</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>naqeebmsd108@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+923098923323</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Islamabad, Pakistan</p>
+                            </div>
+                        </div>
+                        <div class="social-links" style="margin-top: 40px;">
+                            <a href="mailto:naqeebmsd108@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                            <a href="https://www.linkedin.com/in/naqeeb-ullah-264947269/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://github.com/naqeeb74" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="https://www.facebook.com/search/top?q=naqeeb%20ullah" class="social-link"><i class="fab fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <div class="card">
+                        <h3 style="color: var(--primary); margin-bottom: 30px;">Send a Message</h3>
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" class="form-control" placeholder=" " required>
+                                <label for="name" class="form-label">Your Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" class="form-control" placeholder=" " required>
+                                <label for="email" class="form-label">Your Email</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" class="form-control" placeholder=" " required>
+                                <label for="subject" class="form-label">Subject</label>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" class="form-control" placeholder=" " required></textarea>
+                                <label for="message" class="form-label">Your Message</label>
+                            </div>
+                            <button type="submit" class="btn">Send Message <i class="fas fa-paper-plane"></i></button>
+                            <div id="formStatus" class="form-status"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Naqeeb Ullah</div>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px;">Dynamics CRM Associate Consultant specializing in Microsoft Dynamics 365 solutions, Power Platform development, and business process automation.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 style="color: white; margin-bottom: 25px; font-size: 1.3rem;">Quick Links</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 12px;"><a href="#about" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: var(--transition);">About Me</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#skills" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: var(--transition);">Skills</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#experience" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: var(--transition);">Experience</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#projects" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: var(--transition);">Projects</a></li>
+                        <li><a href="#contact" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; transition: var(--transition);">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4 style="color: white; margin-bottom: 25px; font-size: 1.3rem;">Let's Connect</h4>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 25px;">Interested in collaborating? Feel free to reach out for project discussions or opportunities.</p>
+                    <a href="mailto:naqeebmsd108@gmail.com" class="btn">Email Me</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Naqeeb Ullah. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize Particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS("particles-js", {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#6C63FF" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#6C63FF",
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" }
+                    }
+                },
+                retina_detect: true
+            });
+        });
+
+        // // Theme Toggle
+        // const themeToggle = document.querySelector('.theme-toggle');
+        // const themeIcon = themeToggle.querySelector('i');
+        
+        // themeToggle.addEventListener('click', () => {
+        //     document.body.classList.toggle('dark-theme');
+            
+        //     if (document.body.classList.contains('dark-theme')) {
+        //         themeIcon.classList.remove('fa-moon');
+        //         themeIcon.classList.add('fa-sun');
+        //         localStorage.setItem('theme', 'dark');
+        //     } else {
+        //         themeIcon.classList.remove('fa-sun');
+        //         themeIcon.classList.add('fa-moon');
+        //         localStorage.setItem('theme', 'light');
+        //     }
+        // });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const navLinksItems = document.querySelectorAll('.nav-links a');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+            mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+        });
+
+        // Close mobile menu when clicking a link
+        navLinksItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Animated counter for stats
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        const animateCounter = (element) => {
+            const target = parseInt(element.getAttribute('data-count'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + "+";
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        };
+
+        // Animate skill bars on scroll
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.progress');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = width + '%';
+            });
+        };
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add animation class
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Animate counters if it's a stat number
+                    if (entry.target.classList.contains('stat-number')) {
+                        animateCounter(entry.target);
+                    }
+                    
+                    // Animate skill bars
+                    if (entry.target.classList.contains('progress')) {
+                        setTimeout(animateSkillBars, 300);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.card, .timeline-content, .project-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Observe stat numbers
+        document.querySelectorAll('.stat-number').forEach(el => {
+            el.textContent = '0';
+            observer.observe(el);
+        });
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Formspree integration for sending emails
+            // You need to replace 'YOUR_FORMSPREE_ENDPOINT' with your actual Formspree endpoint
+            // To get one, sign up at https://formspree.io/ and create a form
+            // Then replace the fetch URL with your Formspree endpoint
+            
+            // For now, we'll simulate a successful submission
+            setTimeout(() => {
+                // Simulate successful submission
+                document.getElementById('formStatus').className = 'form-status success';
+                document.getElementById('formStatus').textContent = 'Message sent successfully! I\'ll get back to you soon.';
+                document.getElementById('formStatus').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('contactForm').reset();
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('formStatus').style.display = 'none';
+                }, 5000);
+            }, 1500);
+            
+            // Actual Formspree integration (uncomment and replace with your endpoint)
+            /*
+            fetch('https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('formStatus').className = 'form-status success';
+                    document.getElementById('formStatus').textContent = 'Message sent successfully! I\'ll get back to you soon.';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                document.getElementById('formStatus').className = 'form-status error';
+                document.getElementById('formStatus').textContent = 'Something went wrong. Please try again or email me directly.';
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                setTimeout(() => {
+                    document.getElementById('formStatus').style.display = 'none';
+                }, 5000);
+            });
+            */
+        });
+
+        // Add floating elements
+        const floatingElements = ['<i class="fas fa-cube"></i>', '<i class="fas fa-circle"></i>', '<i class="fas fa-star"></i>', '<i class="fas fa-bolt"></i>'];
+        
+        for (let i = 0; i < 12; i++) {
+            const elem = document.createElement('div');
+            elem.className = 'floating-elem';
+            elem.innerHTML = floatingElements[Math.floor(Math.random() * floatingElements.length)];
+            elem.style.top = `${Math.random() * 100}%`;
+            elem.style.left = `${Math.random() * 100}%`;
+            elem.style.fontSize = `${Math.random() * 24 + 16}px`;
+            elem.style.color = i % 3 === 0 ? 'var(--primary)' : i % 3 === 1 ? 'var(--secondary)' : '#FF6B9D';
+            elem.style.animationDuration = `${Math.random() * 30 + 20}s`;
+            elem.style.animationDelay = `${Math.random() * 5}s`;
+            document.body.appendChild(elem);
+        }
+    </script>
 </body>
 </html>
